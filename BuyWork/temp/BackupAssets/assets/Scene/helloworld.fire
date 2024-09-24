@@ -88,9 +88,6 @@
       },
       {
         "__id__": 13
-      },
-      {
-        "__id__": 14
       }
     ],
     "_prefab": null,
@@ -568,20 +565,6 @@
     "_fitWidth": false,
     "_fitHeight": true,
     "_id": "3bG3FQAmJDU40IyY8qUH5e"
-  },
-  {
-    "__type__": "e1b90/rohdEk4SdmmEZANaD",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 2
-    },
-    "_enabled": true,
-    "label": {
-      "__id__": 11
-    },
-    "text": "hello",
-    "_id": "86TzuGo81AyaQqjmJXXt1T"
   },
   {
     "__type__": "cc.Widget",

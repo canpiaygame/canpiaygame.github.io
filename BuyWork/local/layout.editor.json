@@ -106,6 +106,7 @@
   },
   "panelLabelWidth": {
     "builder": null,
-    "project-settings": null
+    "project-settings": null,
+    "inspector": null
   }
 }
