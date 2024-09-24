@@ -1,0 +1,20 @@
+{
+  "platform": "web-mobile",
+  "actualPlatform": "web-mobile",
+  "template": "default",
+  "buildPath": "./build",
+  "debug": false,
+  "sourceMaps": true,
+  "embedWebDebugger": true,
+  "previewWidth": "1280",
+  "previewHeight": "720",
+  "useDebugKeystore": true,
+  "keystorePath": "",
+  "keystorePassword": "",
+  "keystoreAlias": "",
+  "keystoreAliasPassword": "",
+  "apiLevel": "",
+  "appABIs": [],
+  "vsVersion": "2017",
+  "buildScriptsOnly": false
+}
