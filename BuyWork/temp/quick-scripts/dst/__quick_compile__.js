@@ -1,6 +1,6 @@
 
 (function () {
-var scripts = [{"deps":{"./assets/BuyWork/Script/Helloworld":1},"path":"preview-scripts/__qc_index__.js"},{"deps":{},"path":"preview-scripts/assets/BuyWork/Script/Helloworld.js"}];
+var scripts = [{"deps":{"./assets/BuyWork/Script/Tips":8,"./assets/BuyWork/Script/RotateSelf":2,"./assets/BuyWork/Script/Shop":4,"./assets/BuyWork/Script/ToolBar":5,"./assets/BuyWork/Script/Login":6,"./assets/BuyWork/Script/HomePage":3,"./assets/BuyWork/Script/Helloworld":1,"./assets/BuyWork/Script/DataType":7},"path":"preview-scripts/__qc_index__.js"},{"deps":{},"path":"preview-scripts/assets/BuyWork/Script/Helloworld.js"},{"deps":{},"path":"preview-scripts/assets/BuyWork/Script/RotateSelf.js"},{"deps":{"./Tips":8,"./DataType":7,"./Shop":4,"./Login":6},"path":"preview-scripts/assets/BuyWork/Script/HomePage.js"},{"deps":{},"path":"preview-scripts/assets/BuyWork/Script/Shop.js"},{"deps":{},"path":"preview-scripts/assets/BuyWork/Script/ToolBar.js"},{"deps":{},"path":"preview-scripts/assets/BuyWork/Script/Login.js"},{"deps":{},"path":"preview-scripts/assets/BuyWork/Script/DataType.js"},{"deps":{},"path":"preview-scripts/assets/BuyWork/Script/Tips.js"}];
 var entries = ["preview-scripts/__qc_index__.js"];
 var bundleScript = 'preview-scripts/__qc_bundle__.js';
 
