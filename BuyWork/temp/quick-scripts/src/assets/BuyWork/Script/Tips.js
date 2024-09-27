@@ -35,20 +35,14 @@ var Tips = /** @class */ (function (_super) {
     function Tips() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.label = null;
-        _this.text = 'hello';
         return _this;
-        // update (dt) {}
     }
-    // LIFE-CYCLE CALLBACKS:
-    // onLoad () {}
-    Tips.prototype.start = function () {
+    Tips.prototype.setLabel = function (str) {
+        this.label.string = str;
     };
     __decorate([
         property(cc.Label)
     ], Tips.prototype, "label", void 0);
-    __decorate([
-        property
-    ], Tips.prototype, "text", void 0);
     Tips = __decorate([
         ccclass
     ], Tips);

@@ -1,14 +1,8 @@
 "use strict";
-cc._RF.push(module, 'fcaecmodRxGPbpaOb3rYg5g', 'Tips');
-// BuyWork/Script/Tips.ts
+cc._RF.push(module, 'd0a18SsggdPx5t+utx8+aWb', 'BookItem');
+// BuyWork/Script/BookItem.ts
 
 "use strict";
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -29,25 +23,55 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var DataType_1 = require("./DataType");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
-var Tips = /** @class */ (function (_super) {
-    __extends(Tips, _super);
-    function Tips() {
+var BookItem = /** @class */ (function (_super) {
+    __extends(BookItem, _super);
+    function BookItem() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.label = null;
+        _this.bookName = null;
+        _this.pic = null;
+        _this.root = null;
         return _this;
     }
-    Tips.prototype.setLabel = function (str) {
-        this.label.string = str;
+    BookItem.prototype.setRoot = function (root) {
+        this.root = root;
+    };
+    BookItem.prototype.onLoad = function () {
+        this.node.on(cc.Node.EventType.TOUCH_END, this.click, this);
+    };
+    BookItem.prototype.click = function (e) {
+        if (!this.root)
+            return;
+        if (!this.bookData)
+            return;
+        this.root.onShowDetial(this.bookData);
+    };
+    BookItem.prototype.setData = function (bd) {
+        this.bookData = bd;
+        this.updateUI();
+    };
+    BookItem.prototype.updateUI = function () {
+        var _this = this;
+        this.bookName.string = this.bookData.name;
+        var path = DataType_1.IMG.getImg((parseInt(this.bookData.cover)));
+        cc.loader.loadRes(path, cc.Texture2D, function (error, resource) {
+            var spf = new cc.SpriteFrame;
+            spf.setTexture(resource);
+            _this.pic.spriteFrame = spf;
+        });
     };
     __decorate([
         property(cc.Label)
-    ], Tips.prototype, "label", void 0);
-    Tips = __decorate([
+    ], BookItem.prototype, "bookName", void 0);
+    __decorate([
+        property(cc.Sprite)
+    ], BookItem.prototype, "pic", void 0);
+    BookItem = __decorate([
         ccclass
-    ], Tips);
-    return Tips;
+    ], BookItem);
+    return BookItem;
 }(cc.Component));
-exports.default = Tips;
+exports.default = BookItem;
 
 cc._RF.pop();

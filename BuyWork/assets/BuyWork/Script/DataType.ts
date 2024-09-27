@@ -2,17 +2,18 @@
 export class PageData {
     userInfo: UserInfo;             // 用户数据 
     toolBarData: any;               // 工具栏
-    shopData: any;                  // 商城数据
+    shopData: BookListData = null;                  // 商城数据
     isLogin: boolean = false;        // 
-    loading: boolean = false;
-
+    isTourist: boolean = false;
 }
 
 export class UserInfo {
-    userName: string = '';
-    psw: string = '';
-    role: role = role.Tourist;
-    uid: string = ''
+    name: string = '';
+    password: string = '';
+    admin: string = ''
+    id: string = ''
+    creationTime: string = '';
+    updateTime: string = '';
 }
 export enum EventAct {
     ShowLoading = 'showLoading',
@@ -20,42 +21,59 @@ export enum EventAct {
 
 }
 
-export enum role {
-    Tourist,
-    User,
-    Admin,
-}
+// export enum role {
+//     Tourist,
+//     User,
+//     Admin,
+// }
 
-/**
- *购物车 购物清单
-*/
-export class ItemList {
-    bookList: BookData[] = [];
-    lastUpdateTime: number = 0
-}
-
-/**
- * 订单
- */
-export class OrderForm {
-    itemList: ItemData[] = [];
-
-}
-
-export class ItemData {
-    bookData: BookData = null;
+export class BookListData {
+    responseCode: number = 0
+    responseMessage: string = ''
+    currentPage: number = 0
+    pageSize: number = 0
+    totalPage: number = 0
+    data: BookData[] = []
 }
 
 export class BookData {
-    name: string = '';
-    from: string = '';
-    date: any = ''; // string or number
-    isbn: string = '';
-    desc: string = '';
-    pic: number = 0;
-    price: number = 0;
+    id: string = ''
+    name: string = ''
+    publishingHouse: string = ''
+    publicationDate: string = ''
+    isbn: string = ''
+    description: string = ''
+    cover: string = ''
+    unitPrice: string = ''
+}
 
-    createTime: number = 0   // 时间戳或者字符串  书本下单时间
-    payTime:number = 0;      // 付款时间
 
-} 
+
+export const URL = {
+    Login: 'v1/auth/login',
+    LogOut: 'v1/auth/logout',
+    Register: '/v1/user',
+    BookList: '/v1/book/paging',
+    AddBook: '/v1/book',
+    Buy:'/v1/order',
+
+    test: 'http://localhost:8888/',
+    prod: '',
+    get DOMAIN() {
+        return URL.test
+    }
+
+}
+
+export const IMG = {
+    IMG: [
+        'Img/1',
+        'Img/2',
+        'Img/3',
+        'Img/4',
+        'Img/5'
+    ],
+    getImg(num: number) {
+        return IMG.IMG[num]
+    }
+}

@@ -1,6 +1,6 @@
 "use strict";
-cc._RF.push(module, 'fc4d7Y+f21I+KtgcUjfTLOh', 'HomePage');
-// BuyWork/Script/HomePage.ts
+cc._RF.push(module, '175b8o5WeFCUJTJrPghmHPl', 'BookDetail');
+// BuyWork/Script/BookDetail.ts
 
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -60,121 +60,113 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var DataType_1 = require("./DataType");
-var Login_1 = require("./Login");
 var Net_1 = require("./Net");
-var Shop_1 = require("./Shop");
-var Tips_1 = require("./Tips");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
-var HomePage = /** @class */ (function (_super) {
-    __extends(HomePage, _super);
-    function HomePage() {
+var BookDetail = /** @class */ (function (_super) {
+    __extends(BookDetail, _super);
+    function BookDetail() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.loading = null;
-        _this.shopNode = null;
-        _this.loginNode = null;
-        _this.tips = null;
-        _this.pageData = new DataType_1.PageData();
+        _this.bookName = null;
+        _this.price = null;
+        _this.publishingHouse = null;
+        _this.isbn = null;
+        _this.dec = null;
+        _this.pic = null;
+        _this.num = null;
+        _this.edNum = 1;
+        _this.uid = '';
+        _this.root = null;
         return _this;
+        // update (dt) {}
     }
-    HomePage.prototype.setUserData = function (ud) {
-        return __awaiter(this, void 0, void 0, function () {
-            var pd, bookList;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        pd = this.getPageData();
-                        if (!ud) return [3 /*break*/, 2];
-                        pd.userInfo = ud;
-                        pd.isLogin = true;
-                        return [4 /*yield*/, Net_1.default.getBookList()];
-                    case 1:
-                        bookList = _a.sent();
-                        pd.shopData = bookList;
-                        return [3 /*break*/, 3];
-                    case 2:
-                        pd.userInfo = null;
-                        pd.isLogin = false;
-                        pd.shopData = null;
-                        _a.label = 3;
-                    case 3:
-                        this.updatePageData(pd);
-                        this.node.emit(DataType_1.EventAct.HideLoading);
-                        return [2 /*return*/];
-                }
-            });
-        });
+    BookDetail.prototype.setData = function (bd, uid) {
+        this.bookData = bd;
+        this.edNum = 1;
+        this.uid = uid;
+        this.updateUI();
     };
-    HomePage.prototype.touristLogin = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var pd, bookList;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        pd = this.getPageData();
-                        pd.isTourist = true;
-                        pd.userInfo = null;
-                        pd.isLogin = false;
-                        return [4 /*yield*/, Net_1.default.getBookList()];
-                    case 1:
-                        bookList = _a.sent();
-                        pd.shopData = bookList;
-                        this.updatePageData(pd);
-                        return [2 /*return*/];
-                }
-            });
-        });
+    BookDetail.prototype.setRoot = function (root) {
+        this.root = root;
     };
-    HomePage.prototype.onLoad = function () {
-        this.node.on(DataType_1.EventAct.ShowLoading, this.showLoading.bind(this), this);
-        this.node.on(DataType_1.EventAct.HideLoading, this.hideLoading.bind(this), this);
-        this.loginNode.setRoot(this);
-        this.shopNode.setRoot(this);
-    };
-    HomePage.prototype.updatePageData = function (data) {
-        this.pageData = data;
-        this.updateUI(this.pageData);
-    };
-    HomePage.prototype.updateUI = function (data) {
-        this.loginNode.node.active = data.isTourist ? false : !data.isLogin;
-        this.shopNode.node.active = (data.isLogin && data.shopData != null);
-        if (data.shopData && data.shopData != this.shopNode.shopData) {
-            this.shopNode.setData(data.shopData, data.userInfo.id);
-        }
-    };
-    HomePage.prototype.showLoading = function () {
-        this.loading.active = true;
-    };
-    HomePage.prototype.hideLoading = function () {
-        this.loading.active = false;
-    };
-    HomePage.prototype.getPageData = function () {
-        return this.pageData;
-    };
-    HomePage.prototype.showTips = function (str) {
+    BookDetail.prototype.updateUI = function () {
         var _this = this;
-        this.tips.node.active = true;
-        this.tips.setLabel(str);
-        this.scheduleOnce(function () {
-            _this.tips.node.active = false;
-        }, 1);
+        this.bookName.string = "\u4E66\u540D\uFF1A\u300A" + this.bookData.name + "\u300B";
+        this.price.string = "\u4EF7\u683C\uFF1A\u300A" + this.bookData.unitPrice + "\u300B";
+        this.publishingHouse.string = "\u51FA\u7248\u793E\uFF1A" + this.bookData.publishingHouse;
+        this.isbn.string = "isbn\uFF1A" + this.bookData.isbn;
+        this.dec.string = "\u7B80\u4ECB\uFF1A" + this.bookData.description;
+        var path = DataType_1.IMG.getImg((parseInt(this.bookData.cover)));
+        cc.loader.loadRes(path, cc.Texture2D, function (error, resource) {
+            var spf = new cc.SpriteFrame;
+            spf.setTexture(resource);
+            _this.pic.spriteFrame = spf;
+        });
+        this.num.string = this.edNum.toString();
+    };
+    BookDetail.prototype.closeBtn = function () {
+        this.node.active = false;
+    };
+    BookDetail.prototype.left = function () {
+        if (this.edNum - 1 >= 1) {
+            this.edNum = this.edNum - 1;
+        }
+        this.updateUI();
+    };
+    BookDetail.prototype.right = function () {
+        if (this.edNum + 1 <= 99) {
+            this.edNum = this.edNum + 1;
+        }
+        this.updateUI();
+    };
+    BookDetail.prototype.buy = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var reslut;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.root.node.emit(DataType_1.EventAct.ShowLoading);
+                        return [4 /*yield*/, Net_1.default.buyBook(this.uid, this.bookData.id, this.edNum)];
+                    case 1:
+                        reslut = _a.sent();
+                        if (reslut) {
+                            this.root.showTips('购买成功！');
+                        }
+                        else {
+                            this.root.showTips('购买失败！请重试');
+                        }
+                        this.root.node.emit(DataType_1.EventAct.HideLoading);
+                        this.closeBtn();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     __decorate([
-        property(cc.Node)
-    ], HomePage.prototype, "loading", void 0);
+        property(cc.Label)
+    ], BookDetail.prototype, "bookName", void 0);
     __decorate([
-        property(Shop_1.default)
-    ], HomePage.prototype, "shopNode", void 0);
+        property(cc.Label)
+    ], BookDetail.prototype, "price", void 0);
     __decorate([
-        property(Login_1.default)
-    ], HomePage.prototype, "loginNode", void 0);
+        property(cc.Label)
+    ], BookDetail.prototype, "publishingHouse", void 0);
     __decorate([
-        property(Tips_1.default)
-    ], HomePage.prototype, "tips", void 0);
-    HomePage = __decorate([
+        property(cc.Label)
+    ], BookDetail.prototype, "isbn", void 0);
+    __decorate([
+        property(cc.Label)
+    ], BookDetail.prototype, "dec", void 0);
+    __decorate([
+        property(cc.Sprite)
+    ], BookDetail.prototype, "pic", void 0);
+    __decorate([
+        property(cc.Label)
+    ], BookDetail.prototype, "num", void 0);
+    BookDetail = __decorate([
         ccclass
-    ], HomePage);
-    return HomePage;
+    ], BookDetail);
+    return BookDetail;
 }(cc.Component));
-exports.default = HomePage;
+exports.default = BookDetail;
 
 cc._RF.pop();

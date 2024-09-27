@@ -4,21 +4,24 @@ cc._RF.push(module, '2638431TJ1NJ43dPutfIpg2', 'DataType');
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BookData = exports.ItemData = exports.OrderForm = exports.ItemList = exports.role = exports.EventAct = exports.UserInfo = exports.PageData = void 0;
+exports.IMG = exports.URL = exports.BookData = exports.BookListData = exports.EventAct = exports.UserInfo = exports.PageData = void 0;
 var PageData = /** @class */ (function () {
     function PageData() {
+        this.shopData = null; // 商城数据
         this.isLogin = false; // 
-        this.loading = false;
+        this.isTourist = false;
     }
     return PageData;
 }());
 exports.PageData = PageData;
 var UserInfo = /** @class */ (function () {
     function UserInfo() {
-        this.userName = '';
-        this.psw = '';
-        this.role = role.Tourist;
-        this.uid = '';
+        this.name = '';
+        this.password = '';
+        this.admin = '';
+        this.id = '';
+        this.creationTime = '';
+        this.updateTime = '';
     }
     return UserInfo;
 }());
@@ -28,54 +31,61 @@ var EventAct;
     EventAct["ShowLoading"] = "showLoading";
     EventAct["HideLoading"] = "hideLoading";
 })(EventAct = exports.EventAct || (exports.EventAct = {}));
-var role;
-(function (role) {
-    role[role["Tourist"] = 0] = "Tourist";
-    role[role["User"] = 1] = "User";
-    role[role["Admin"] = 2] = "Admin";
-})(role = exports.role || (exports.role = {}));
-/**
- *购物车 购物清单
-*/
-var ItemList = /** @class */ (function () {
-    function ItemList() {
-        this.bookList = [];
-        this.lastUpdateTime = 0;
+// export enum role {
+//     Tourist,
+//     User,
+//     Admin,
+// }
+var BookListData = /** @class */ (function () {
+    function BookListData() {
+        this.responseCode = 0;
+        this.responseMessage = '';
+        this.currentPage = 0;
+        this.pageSize = 0;
+        this.totalPage = 0;
+        this.data = [];
     }
-    return ItemList;
+    return BookListData;
 }());
-exports.ItemList = ItemList;
-/**
- * 订单
- */
-var OrderForm = /** @class */ (function () {
-    function OrderForm() {
-        this.itemList = [];
-    }
-    return OrderForm;
-}());
-exports.OrderForm = OrderForm;
-var ItemData = /** @class */ (function () {
-    function ItemData() {
-        this.bookData = null;
-    }
-    return ItemData;
-}());
-exports.ItemData = ItemData;
+exports.BookListData = BookListData;
 var BookData = /** @class */ (function () {
     function BookData() {
+        this.id = '';
         this.name = '';
-        this.from = '';
-        this.date = ''; // string or number
+        this.publishingHouse = '';
+        this.publicationDate = '';
         this.isbn = '';
-        this.desc = '';
-        this.pic = 0;
-        this.price = 0;
-        this.createTime = 0; // 时间戳或者字符串  书本下单时间
-        this.payTime = 0; // 付款时间
+        this.description = '';
+        this.cover = '';
+        this.unitPrice = '';
     }
     return BookData;
 }());
 exports.BookData = BookData;
+exports.URL = {
+    Login: 'v1/auth/login',
+    LogOut: 'v1/auth/logout',
+    Register: '/v1/user',
+    BookList: '/v1/book/paging',
+    AddBook: '/v1/book',
+    Buy: '/v1/order',
+    test: 'http://localhost:8888/',
+    prod: '',
+    get DOMAIN() {
+        return exports.URL.test;
+    }
+};
+exports.IMG = {
+    IMG: [
+        'Img/1',
+        'Img/2',
+        'Img/3',
+        'Img/4',
+        'Img/5'
+    ],
+    getImg: function (num) {
+        return exports.IMG.IMG[num];
+    }
+};
 
 cc._RF.pop();
