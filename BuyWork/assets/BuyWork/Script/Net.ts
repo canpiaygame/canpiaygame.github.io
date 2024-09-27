@@ -1,4 +1,4 @@
-import { BookData, BookListData, URL, UserInfo } from "./DataType";
+import { BookData, BookListData, OrderListData, URL, UserInfo } from "./DataType";
 
 export default class Net {
 
@@ -138,6 +138,28 @@ export default class Net {
                 reslove(true)
             } else {
                 reject(new Error(`注册失败`));
+            }
+        })
+    }
+
+    static async myList(uid): Promise<OrderListData> {
+        let data = {
+            currentPage: 0,
+            pageSize: 9999,
+        };
+        return new Promise(async (reslove, reject) => {
+            let result = JSON.parse(await this.ajax('POST', `${URL.DOMAIN}${URL.HistoryMy}`, JSON.stringify(data), [{
+                name: "Content-Type",
+                value: "application/json"
+            }, {
+                name: 'userId',
+                value: uid
+
+            }]));
+            if (result && result.responseMessage == 'Success') {
+                reslove(result)
+            } else {
+                reject(new Error(`失败`));
             }
         })
     }

@@ -1,3 +1,4 @@
+import BottomTool from "./BottomTool";
 import { BookListData, EventAct, PageData, UserInfo } from "./DataType";
 import Login from "./Login";
 import Net from "./Net";
@@ -16,6 +17,9 @@ export default class HomePage extends cc.Component {
 
     @property(Shop)
     shopNode: Shop = null;
+
+    @property(BottomTool)
+    bottomTool: BottomTool = null;
 
     @property(Login)
     loginNode: Login = null;
@@ -56,6 +60,7 @@ export default class HomePage extends cc.Component {
         this.node.on(EventAct.HideLoading, this.hideLoading.bind(this), this);
         this.loginNode.setRoot(this);
         this.shopNode.setRoot(this);
+        this.bottomTool.setRoot(this);
     }
 
     updatePageData(data: PageData) {

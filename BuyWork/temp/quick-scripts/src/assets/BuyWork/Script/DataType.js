@@ -4,7 +4,7 @@ cc._RF.push(module, '2638431TJ1NJ43dPutfIpg2', 'DataType');
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IMG = exports.URL = exports.BookData = exports.BookListData = exports.EventAct = exports.UserInfo = exports.PageData = void 0;
+exports.IMG = exports.URL = exports.OrderData = exports.OrderListData = exports.BookData = exports.BookListData = exports.EventAct = exports.UserInfo = exports.PageData = void 0;
 var PageData = /** @class */ (function () {
     function PageData() {
         this.shopData = null; // 商城数据
@@ -62,6 +62,31 @@ var BookData = /** @class */ (function () {
     return BookData;
 }());
 exports.BookData = BookData;
+var OrderListData = /** @class */ (function () {
+    function OrderListData() {
+        this.responseCode = 0;
+        this.responseMessage = '';
+        this.currentPage = 0;
+        this.pageSize = 0;
+        this.totalPage = 0;
+        this.data = [];
+    }
+    return OrderListData;
+}());
+exports.OrderListData = OrderListData;
+var OrderData = /** @class */ (function () {
+    function OrderData() {
+        this.id = '';
+        this.bookId = '';
+        this.userId = '';
+        this.userName = '';
+        this.bookName = '';
+        this.total = 0;
+        this.amount = 0;
+    }
+    return OrderData;
+}());
+exports.OrderData = OrderData;
 exports.URL = {
     Login: 'v1/auth/login',
     LogOut: 'v1/auth/logout',
@@ -69,6 +94,8 @@ exports.URL = {
     BookList: '/v1/book/paging',
     AddBook: '/v1/book',
     Buy: '/v1/order',
+    HistoryMy: '/v1/order/paging',
+    HistoryAll: '/v1/order/paging',
     test: 'http://localhost:8888/',
     prod: '',
     get DOMAIN() {

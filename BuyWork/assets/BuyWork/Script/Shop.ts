@@ -37,7 +37,7 @@ export default class Shop extends cc.Component {
         }, {})
         for (let i = 0; i < data.length; i++) {
             const bookData = data[i];
-            let child = items[i.toString()];
+            let child = items[bookData.id];
             if (child) {
                 child.getComponent(BookItem).setData(bookData);
                 delete items[child.name]

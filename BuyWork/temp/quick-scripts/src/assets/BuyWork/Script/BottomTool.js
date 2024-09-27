@@ -1,6 +1,6 @@
 "use strict";
-cc._RF.push(module, 'fc4d7Y+f21I+KtgcUjfTLOh', 'HomePage');
-// BuyWork/Script/HomePage.ts
+cc._RF.push(module, 'b8b26yFLmVERJ2Y7gF2m15N', 'BottomTool');
+// BuyWork/Script/BottomTool.ts
 
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -59,128 +59,94 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var BottomTool_1 = require("./BottomTool");
 var DataType_1 = require("./DataType");
-var Login_1 = require("./Login");
 var Net_1 = require("./Net");
-var Shop_1 = require("./Shop");
-var Tips_1 = require("./Tips");
+var OrderItem_1 = require("./OrderItem");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
-var HomePage = /** @class */ (function (_super) {
-    __extends(HomePage, _super);
-    function HomePage() {
+var BottomTool = /** @class */ (function (_super) {
+    __extends(BottomTool, _super);
+    function BottomTool() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.loading = null;
-        _this.shopNode = null;
-        _this.bottomTool = null;
-        _this.loginNode = null;
-        _this.tips = null;
-        _this.pageData = new DataType_1.PageData();
+        _this.content = null;
+        _this.orderItem = null;
+        _this.orderList = null;
+        _this.root = null;
+        _this.old = null;
         return _this;
+        // update (dt) {}
     }
-    HomePage.prototype.setUserData = function (ud) {
+    BottomTool.prototype.setRoot = function (root) {
+        this.root = root;
+    };
+    BottomTool.prototype.openOrderList = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var pd, bookList;
+            var reslut;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        pd = this.getPageData();
-                        if (!ud) return [3 /*break*/, 2];
-                        pd.userInfo = ud;
-                        pd.isLogin = true;
-                        return [4 /*yield*/, Net_1.default.getBookList()];
+                        this.root.node.emit(DataType_1.EventAct.ShowLoading);
+                        return [4 /*yield*/, Net_1.default.myList(this.root.getPageData().userInfo.id)];
                     case 1:
-                        bookList = _a.sent();
-                        pd.shopData = bookList;
-                        return [3 /*break*/, 3];
-                    case 2:
-                        pd.userInfo = null;
-                        pd.isLogin = false;
-                        pd.shopData = null;
-                        _a.label = 3;
-                    case 3:
-                        this.updatePageData(pd);
-                        this.node.emit(DataType_1.EventAct.HideLoading);
+                        reslut = _a.sent();
+                        if (reslut) {
+                            this.old = reslut;
+                            this.updateUI();
+                        }
+                        else {
+                            this.root.showTips('历史订单错误，请重试！');
+                        }
+                        this.root.node.emit(DataType_1.EventAct.HideLoading);
+                        this.orderList.active = true;
                         return [2 /*return*/];
                 }
             });
         });
     };
-    HomePage.prototype.touristLogin = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var pd, bookList;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        pd = this.getPageData();
-                        pd.isTourist = true;
-                        pd.userInfo = null;
-                        pd.isLogin = false;
-                        return [4 /*yield*/, Net_1.default.getBookList()];
-                    case 1:
-                        bookList = _a.sent();
-                        pd.shopData = bookList;
-                        this.updatePageData(pd);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    HomePage.prototype.onLoad = function () {
-        this.node.on(DataType_1.EventAct.ShowLoading, this.showLoading.bind(this), this);
-        this.node.on(DataType_1.EventAct.HideLoading, this.hideLoading.bind(this), this);
-        this.loginNode.setRoot(this);
-        this.shopNode.setRoot(this);
-        this.bottomTool.setRoot(this);
-    };
-    HomePage.prototype.updatePageData = function (data) {
-        this.pageData = data;
-        this.updateUI(this.pageData);
-    };
-    HomePage.prototype.updateUI = function (data) {
-        this.loginNode.node.active = data.isTourist ? false : !data.isLogin;
-        this.shopNode.node.active = (data.isLogin && data.shopData != null);
-        if (data.shopData && data.shopData != this.shopNode.shopData) {
-            this.shopNode.setData(data.shopData, data.userInfo.id);
+    BottomTool.prototype.updateUI = function () {
+        var data = this.old.data;
+        var items = this.content.children.reduce(function (arr, child, i) {
+            arr[child.name] = child;
+            return arr;
+        }, {});
+        for (var i = 0; i < data.length; i++) {
+            var olData = data[i];
+            var child = items[olData.id];
+            if (child) {
+                child.getComponent(OrderItem_1.default).setData(olData);
+                delete items[child.name];
+            }
+            else {
+                var node = this.createNode(olData.id);
+                node.getComponent(OrderItem_1.default).setData(olData);
+            }
+        }
+        for (var itemName in items) {
+            items[itemName].destroy();
         }
     };
-    HomePage.prototype.showLoading = function () {
-        this.loading.active = true;
+    BottomTool.prototype.createNode = function (name) {
+        var node = cc.instantiate(this.orderItem);
+        node.name = name;
+        this.content.addChild(node);
+        return node;
     };
-    HomePage.prototype.hideLoading = function () {
-        this.loading.active = false;
-    };
-    HomePage.prototype.getPageData = function () {
-        return this.pageData;
-    };
-    HomePage.prototype.showTips = function (str) {
-        var _this = this;
-        this.tips.node.active = true;
-        this.tips.setLabel(str);
-        this.scheduleOnce(function () {
-            _this.tips.node.active = false;
-        }, 1);
+    BottomTool.prototype.closeOrderList = function () {
+        this.orderList.active = false;
     };
     __decorate([
         property(cc.Node)
-    ], HomePage.prototype, "loading", void 0);
+    ], BottomTool.prototype, "content", void 0);
     __decorate([
-        property(Shop_1.default)
-    ], HomePage.prototype, "shopNode", void 0);
+        property(cc.Prefab)
+    ], BottomTool.prototype, "orderItem", void 0);
     __decorate([
-        property(BottomTool_1.default)
-    ], HomePage.prototype, "bottomTool", void 0);
-    __decorate([
-        property(Login_1.default)
-    ], HomePage.prototype, "loginNode", void 0);
-    __decorate([
-        property(Tips_1.default)
-    ], HomePage.prototype, "tips", void 0);
-    HomePage = __decorate([
+        property(cc.Node)
+    ], BottomTool.prototype, "orderList", void 0);
+    BottomTool = __decorate([
         ccclass
-    ], HomePage);
-    return HomePage;
+    ], BottomTool);
+    return BottomTool;
 }(cc.Component));
-exports.default = HomePage;
+exports.default = BottomTool;
 
 cc._RF.pop();

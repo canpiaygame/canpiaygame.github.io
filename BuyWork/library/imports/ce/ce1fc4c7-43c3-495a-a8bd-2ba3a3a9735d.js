@@ -56,7 +56,7 @@ var Shop = /** @class */ (function (_super) {
         }, {});
         for (var i = 0; i < data.length; i++) {
             var bookData = data[i];
-            var child = items[i.toString()];
+            var child = items[bookData.id];
             if (child) {
                 child.getComponent(BookItem_1.default).setData(bookData);
                 delete items[child.name];

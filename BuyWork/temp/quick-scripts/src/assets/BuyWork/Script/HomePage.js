@@ -59,6 +59,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var BottomTool_1 = require("./BottomTool");
 var DataType_1 = require("./DataType");
 var Login_1 = require("./Login");
 var Net_1 = require("./Net");
@@ -71,6 +72,7 @@ var HomePage = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.loading = null;
         _this.shopNode = null;
+        _this.bottomTool = null;
         _this.loginNode = null;
         _this.tips = null;
         _this.pageData = new DataType_1.PageData();
@@ -129,6 +131,7 @@ var HomePage = /** @class */ (function (_super) {
         this.node.on(DataType_1.EventAct.HideLoading, this.hideLoading.bind(this), this);
         this.loginNode.setRoot(this);
         this.shopNode.setRoot(this);
+        this.bottomTool.setRoot(this);
     };
     HomePage.prototype.updatePageData = function (data) {
         this.pageData = data;
@@ -164,6 +167,9 @@ var HomePage = /** @class */ (function (_super) {
     __decorate([
         property(Shop_1.default)
     ], HomePage.prototype, "shopNode", void 0);
+    __decorate([
+        property(BottomTool_1.default)
+    ], HomePage.prototype, "bottomTool", void 0);
     __decorate([
         property(Login_1.default)
     ], HomePage.prototype, "loginNode", void 0);

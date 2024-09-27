@@ -46,7 +46,28 @@ export class BookData {
     cover: string = ''
     unitPrice: string = ''
 }
+export class OrderListData {
+    responseCode: number = 0
+    responseMessage: string = ''
+    currentPage: number = 0
+    pageSize: number = 0
+    totalPage: number = 0
+    data: OrderData[] = []
+}
 
+export class OrderData {
+    id: string = ''
+    bookId: string = ''
+    userId: string = ''
+    userName: string = ''
+    bookName: string = ''
+    total: number = 0;
+    amount: number = 0;
+    orderDate: string;
+    createTime: string;
+    updateTime: string;
+
+}
 
 
 export const URL = {
@@ -55,7 +76,10 @@ export const URL = {
     Register: '/v1/user',
     BookList: '/v1/book/paging',
     AddBook: '/v1/book',
-    Buy:'/v1/order',
+    Buy: '/v1/order',
+    HistoryMy: '/v1/order/paging',
+    HistoryAll: '/v1/order/paging',
+
 
     test: 'http://localhost:8888/',
     prod: '',
