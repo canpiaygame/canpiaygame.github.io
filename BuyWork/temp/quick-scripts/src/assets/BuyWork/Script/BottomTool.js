@@ -84,6 +84,10 @@ var BottomTool = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (!this.root)
+                            return [2 /*return*/];
+                        if (this.root.getPageData().isTourist)
+                            return [2 /*return*/];
                         this.root.node.emit(DataType_1.EventAct.ShowLoading);
                         return [4 /*yield*/, Net_1.default.myList(this.root.getPageData().userInfo.id)];
                     case 1:

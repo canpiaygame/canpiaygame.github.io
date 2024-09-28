@@ -74,6 +74,5 @@ export default class Login extends cc.Component {
         if (!this.root) return;
         this.root.touristLogin();
         this.root.showTips('游客登录！');
-
     }
 }

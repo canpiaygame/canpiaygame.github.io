@@ -4,6 +4,7 @@ import Login from "./Login";
 import Net from "./Net";
 import Shop from "./Shop";
 import Tips from "./Tips";
+import ToolBar from "./ToolBar";
 
 const { ccclass, property } = cc._decorator;
 
@@ -20,7 +21,8 @@ export default class HomePage extends cc.Component {
 
     @property(BottomTool)
     bottomTool: BottomTool = null;
-
+    @property(ToolBar)
+    topTool: ToolBar = null;
     @property(Login)
     loginNode: Login = null;
 
@@ -41,6 +43,7 @@ export default class HomePage extends cc.Component {
         }
         this.updatePageData(pd);
         this.node.emit(EventAct.HideLoading);
+        this.topTool.setUserData(ud);
     }
 
     async touristLogin() {
@@ -61,6 +64,7 @@ export default class HomePage extends cc.Component {
         this.loginNode.setRoot(this);
         this.shopNode.setRoot(this);
         this.bottomTool.setRoot(this);
+        this.topTool.setRoot(this);
     }
 
     updatePageData(data: PageData) {

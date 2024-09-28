@@ -65,6 +65,7 @@ var Login_1 = require("./Login");
 var Net_1 = require("./Net");
 var Shop_1 = require("./Shop");
 var Tips_1 = require("./Tips");
+var ToolBar_1 = require("./ToolBar");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var HomePage = /** @class */ (function (_super) {
     __extends(HomePage, _super);
@@ -73,6 +74,7 @@ var HomePage = /** @class */ (function (_super) {
         _this.loading = null;
         _this.shopNode = null;
         _this.bottomTool = null;
+        _this.topTool = null;
         _this.loginNode = null;
         _this.tips = null;
         _this.pageData = new DataType_1.PageData();
@@ -101,6 +103,7 @@ var HomePage = /** @class */ (function (_super) {
                     case 3:
                         this.updatePageData(pd);
                         this.node.emit(DataType_1.EventAct.HideLoading);
+                        this.topTool.setUserData(ud);
                         return [2 /*return*/];
                 }
             });
@@ -132,6 +135,7 @@ var HomePage = /** @class */ (function (_super) {
         this.loginNode.setRoot(this);
         this.shopNode.setRoot(this);
         this.bottomTool.setRoot(this);
+        this.topTool.setRoot(this);
     };
     HomePage.prototype.updatePageData = function (data) {
         this.pageData = data;
@@ -170,6 +174,9 @@ var HomePage = /** @class */ (function (_super) {
     __decorate([
         property(BottomTool_1.default)
     ], HomePage.prototype, "bottomTool", void 0);
+    __decorate([
+        property(ToolBar_1.default)
+    ], HomePage.prototype, "topTool", void 0);
     __decorate([
         property(Login_1.default)
     ], HomePage.prototype, "loginNode", void 0);

@@ -142,6 +142,27 @@ export default class Net {
         })
     }
 
+
+    static async Fix(userData:UserInfo): Promise<any> {
+        let data = userData;
+        return new Promise(async (reslove, reject) => {
+            let result = JSON.parse(await this.ajax('PUT', `${URL.DOMAIN}${URL.Fix}`, JSON.stringify(data), [{
+                name: "Content-Type",
+                value: "application/json"
+            }, {
+                name: 'userId',
+                value: userData.id
+
+            }]));
+            if (result && result.responseMessage == 'Success') {
+                console.log('注册成功');
+                reslove(true)
+            } else {
+                reject(new Error(`注册失败`));
+            }
+        })
+    }
+
     static async myList(uid): Promise<OrderListData> {
         let data = {
             currentPage: 0,
@@ -164,12 +185,12 @@ export default class Net {
         })
     }
 
-    static async buyBook(uid,bookId,total): Promise<any> {
+    static async buyBook(uid, bookId, total): Promise<any> {
         let data = {
-            userId:uid ,
+            userId: uid,
             bookId: bookId,
             total: total
-          };
+        };
         return new Promise(async (reslove, reject) => {
             let result = JSON.parse(await this.ajax('POST', `${URL.DOMAIN}${URL.Buy}`, JSON.stringify(data), [{
                 name: "Content-Type",

@@ -74,6 +74,7 @@ export const URL = {
     Login: 'v1/auth/login',
     LogOut: 'v1/auth/logout',
     Register: '/v1/user',
+    Fix: '/v1/user',
     BookList: '/v1/book/paging',
     AddBook: '/v1/book',
     Buy: '/v1/order',

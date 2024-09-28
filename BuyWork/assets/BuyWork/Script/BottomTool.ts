@@ -23,6 +23,8 @@ export default class BottomTool extends cc.Component {
     }
     old: OrderListData = null;
     async openOrderList() {
+        if (!this.root) return;
+        if (this.root.getPageData().isTourist) return;
         this.root.node.emit(EventAct.ShowLoading);
         let reslut = await Net.myList(this.root.getPageData().userInfo.id);
         if (reslut) {

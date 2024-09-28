@@ -291,6 +291,41 @@ var Net = /** @class */ (function () {
             });
         });
     };
+    Net.Fix = function (userData) {
+        return __awaiter(this, void 0, Promise, function () {
+            var data;
+            var _this = this;
+            return __generator(this, function (_a) {
+                data = userData;
+                return [2 /*return*/, new Promise(function (reslove, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        var result, _a, _b;
+                        return __generator(this, function (_c) {
+                            switch (_c.label) {
+                                case 0:
+                                    _b = (_a = JSON).parse;
+                                    return [4 /*yield*/, this.ajax('PUT', "" + DataType_1.URL.DOMAIN + DataType_1.URL.Fix, JSON.stringify(data), [{
+                                                name: "Content-Type",
+                                                value: "application/json"
+                                            }, {
+                                                name: 'userId',
+                                                value: userData.id
+                                            }])];
+                                case 1:
+                                    result = _b.apply(_a, [_c.sent()]);
+                                    if (result && result.responseMessage == 'Success') {
+                                        console.log('注册成功');
+                                        reslove(true);
+                                    }
+                                    else {
+                                        reject(new Error("\u6CE8\u518C\u5931\u8D25"));
+                                    }
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })];
+            });
+        });
+    };
     Net.myList = function (uid) {
         return __awaiter(this, void 0, Promise, function () {
             var data;
