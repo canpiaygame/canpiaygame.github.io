@@ -142,8 +142,31 @@ export default class Net {
         })
     }
 
+    static async userList(uid): Promise<any> {
+        let data = {
+            currentPage: 0,
+            pageSize: 9999,
+        };
+        return new Promise(async (reslove, reject) => {
+            let result = JSON.parse(await this.ajax('PUT', `${URL.DOMAIN}${URL.UserList}`, JSON.stringify(data), [{
+                name: "Content-Type",
+                value: "application/json"
+            }, {
+                name: 'userId',
+                value: uid
 
-    static async Fix(userData:UserInfo): Promise<any> {
+            }]));
+            if (result && result.responseMessage == 'Success') {
+                console.log('成功');
+                reslove(result)
+            } else {
+                reject(new Error(`失败`));
+            }
+        })
+    }
+
+
+    static async Fix(userData: UserInfo): Promise<any> {
         let data = userData;
         return new Promise(async (reslove, reject) => {
             let result = JSON.parse(await this.ajax('PUT', `${URL.DOMAIN}${URL.Fix}`, JSON.stringify(data), [{
@@ -170,6 +193,28 @@ export default class Net {
         };
         return new Promise(async (reslove, reject) => {
             let result = JSON.parse(await this.ajax('POST', `${URL.DOMAIN}${URL.HistoryMy}`, JSON.stringify(data), [{
+                name: "Content-Type",
+                value: "application/json"
+            }, {
+                name: 'userId',
+                value: uid
+
+            }]));
+            if (result && result.responseMessage == 'Success') {
+                reslove(result)
+            } else {
+                reject(new Error(`失败`));
+            }
+        })
+    }
+
+    static async orderListAll(uid): Promise<OrderListData> {
+        let data = {
+            currentPage: 0,
+            pageSize: 9999,
+        };
+        return new Promise(async (reslove, reject) => {
+            let result = JSON.parse(await this.ajax('PUT', `${URL.DOMAIN}${URL.HistoryMy}`, JSON.stringify(data), [{
                 name: "Content-Type",
                 value: "application/json"
             }, {

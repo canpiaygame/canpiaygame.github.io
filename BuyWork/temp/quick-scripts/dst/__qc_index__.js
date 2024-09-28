@@ -24,6 +24,7 @@ require('./assets/BuyWork/Script/RotateSelf');
 require('./assets/BuyWork/Script/Shop');
 require('./assets/BuyWork/Script/Tips');
 require('./assets/BuyWork/Script/ToolBar');
+require('./assets/BuyWork/Script/UserItem');
 
                     }
                     if (nodeEnv) {

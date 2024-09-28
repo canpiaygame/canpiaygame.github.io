@@ -4,7 +4,7 @@ cc._RF.push(module, '2638431TJ1NJ43dPutfIpg2', 'DataType');
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IMG = exports.URL = exports.OrderData = exports.OrderListData = exports.BookData = exports.BookListData = exports.EventAct = exports.UserInfo = exports.PageData = void 0;
+exports.IMG = exports.URL = exports.OrderData = exports.OrderListData = exports.BookData = exports.BookListData = exports.EventAct = exports.UserListData = exports.UserInfo = exports.PageData = void 0;
 var PageData = /** @class */ (function () {
     function PageData() {
         this.shopData = null; // 商城数据
@@ -26,6 +26,18 @@ var UserInfo = /** @class */ (function () {
     return UserInfo;
 }());
 exports.UserInfo = UserInfo;
+var UserListData = /** @class */ (function () {
+    function UserListData() {
+        this.responseCode = 0;
+        this.responseMessage = '';
+        this.currentPage = 0;
+        this.pageSize = 0;
+        this.totalPage = 0;
+        this.data = [];
+    }
+    return UserListData;
+}());
+exports.UserListData = UserListData;
 var EventAct;
 (function (EventAct) {
     EventAct["ShowLoading"] = "showLoading";
@@ -97,6 +109,7 @@ exports.URL = {
     Buy: '/v1/order',
     HistoryMy: '/v1/order/paging',
     HistoryAll: '/v1/order/paging',
+    UserList: '/v1/user/paging',
     test: 'http://localhost:8888/',
     prod: '',
     get DOMAIN() {

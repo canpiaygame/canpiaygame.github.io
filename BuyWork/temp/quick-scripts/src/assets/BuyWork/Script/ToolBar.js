@@ -68,6 +68,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WinData = void 0;
 var DataType_1 = require("./DataType");
 var Net_1 = require("./Net");
+var OrderItemAll_1 = require("./OrderItemAll");
+var UserItem_1 = require("./UserItem");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var WinData = /** @class */ (function () {
     function WinData() {
@@ -81,12 +83,22 @@ var ToolBar = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.btnList = [];
         _this.winList = [];
+        //--------------
         _this.userName = null;
         _this.psw = null;
+        //--------------
+        _this.contentOrder = null;
+        _this.orderItem = null;
+        //-----------------------
+        _this.contentUser = null;
+        _this.userItem = null;
+        //-----------------------
         _this.topWin = null;
         _this.root = null;
         _this.openWin = 0;
         _this.userData = null;
+        _this.old = null;
+        _this.userList = null;
         return _this;
         // update (dt) {}
     }
@@ -95,6 +107,34 @@ var ToolBar = /** @class */ (function (_super) {
     };
     ToolBar.prototype.setUserData = function (ud) {
         this.userData = ud;
+    };
+    ToolBar.prototype.updataShop = function () {
+        var data = this.old.data;
+        var items = this.contentOrder.children.reduce(function (arr, child, i) {
+            arr[child.name] = child;
+            return arr;
+        }, {});
+        for (var i = 0; i < data.length; i++) {
+            var olData = data[i];
+            var child = items[olData.id];
+            if (child) {
+                child.getComponent(OrderItemAll_1.default).setData(olData);
+                delete items[child.name];
+            }
+            else {
+                var node = this.createNode(olData.id, this.orderItem);
+                node.getComponent(OrderItemAll_1.default).setData(olData);
+            }
+        }
+        for (var itemName in items) {
+            items[itemName].destroy();
+        }
+    };
+    ToolBar.prototype.createNode = function (name, pf) {
+        var node = cc.instantiate(pf);
+        node.name = name;
+        this.contentOrder.addChild(node);
+        return node;
     };
     ToolBar.prototype.adminUI = function () {
         this.btnList.forEach(function (element) {
@@ -159,6 +199,7 @@ var ToolBar = /** @class */ (function (_super) {
                             this.root.showTips('修改成功');
                             this.userName.textLabel.string = '';
                             this.psw.textLabel.string = '';
+                            this.root.setUserData(result);
                         }
                         else {
                             this.root.showTips('修改失败！');
@@ -168,6 +209,100 @@ var ToolBar = /** @class */ (function (_super) {
                 }
             });
         });
+    };
+    ToolBar.prototype.updataUI = function () {
+        for (var i = 0; i < this.winList.length; i++) {
+            var element = this.winList[i];
+            element.x = this.openWin == i ? -36 : -4000;
+        }
+    };
+    ToolBar.prototype.openUserList = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var reslut;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.root)
+                            return [2 /*return*/];
+                        this.root.node.emit(DataType_1.EventAct.ShowLoading);
+                        return [4 /*yield*/, Net_1.default.userList(this.root.getPageData().userInfo.id)];
+                    case 1:
+                        reslut = _a.sent();
+                        if (reslut) {
+                            this.userList = reslut;
+                            this.updataUserList();
+                        }
+                        else {
+                            this.root.showTips('错误，请重试！');
+                        }
+                        this.root.node.emit(DataType_1.EventAct.HideLoading);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ToolBar.prototype.updataUserList = function () {
+        var data = this.userList.data;
+        var items = this.contentUser.children.reduce(function (arr, child, i) {
+            arr[child.name] = child;
+            return arr;
+        }, {});
+        for (var i = 0; i < data.length; i++) {
+            var uData = data[i];
+            var child = items[uData.id];
+            if (child) {
+                child.getComponent(UserItem_1.default).setData(uData);
+                delete items[child.name];
+            }
+            else {
+                var node = this.createNode(uData.id, this.userItem);
+                node.getComponent(UserItem_1.default).setData(uData);
+            }
+        }
+        for (var itemName in items) {
+            items[itemName].destroy();
+        }
+    };
+    ToolBar.prototype.openOrderList = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var reslut;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.root)
+                            return [2 /*return*/];
+                        // if (this.root.getPageData().isTourist) return;
+                        this.root.node.emit(DataType_1.EventAct.ShowLoading);
+                        return [4 /*yield*/, Net_1.default.orderListAll(this.root.getPageData().userInfo.id)];
+                    case 1:
+                        reslut = _a.sent();
+                        if (reslut) {
+                            this.old = reslut;
+                            this.updataShop();
+                        }
+                        else {
+                            this.root.showTips('历史订单错误，请重试！');
+                        }
+                        this.root.node.emit(DataType_1.EventAct.HideLoading);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ToolBar.prototype.btnUserClick = function () {
+        this.openWin = 0;
+        this.updataUI();
+    };
+    ToolBar.prototype.btnUserListClick = function () {
+        this.openWin = 1;
+        this.updataUI();
+    };
+    ToolBar.prototype.btnOrderListClcik = function () {
+        this.openWin = 3;
+        this.updataUI();
+        this.openOrderList();
+    };
+    ToolBar.prototype.btnShopListClick = function () {
     };
     __decorate([
         property([cc.Node])
@@ -181,6 +316,18 @@ var ToolBar = /** @class */ (function (_super) {
     __decorate([
         property(cc.EditBox)
     ], ToolBar.prototype, "psw", void 0);
+    __decorate([
+        property(cc.Node)
+    ], ToolBar.prototype, "contentOrder", void 0);
+    __decorate([
+        property(cc.Prefab)
+    ], ToolBar.prototype, "orderItem", void 0);
+    __decorate([
+        property(cc.Node)
+    ], ToolBar.prototype, "contentUser", void 0);
+    __decorate([
+        property(cc.Prefab)
+    ], ToolBar.prototype, "userItem", void 0);
     __decorate([
         property(cc.Node)
     ], ToolBar.prototype, "topWin", void 0);

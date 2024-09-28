@@ -15,6 +15,17 @@ export class UserInfo {
     creationTime: string = '';
     updateTime: string = '';
 }
+
+export class UserListData {
+    responseCode: number = 0
+    responseMessage: string = ''
+    currentPage: number = 0
+    pageSize: number = 0
+    totalPage: number = 0
+    data: UserInfo[] = []
+}
+
+
 export enum EventAct {
     ShowLoading = 'showLoading',
     HideLoading = 'hideLoading',
@@ -80,6 +91,7 @@ export const URL = {
     Buy: '/v1/order',
     HistoryMy: '/v1/order/paging',
     HistoryAll: '/v1/order/paging',
+    UserList: '/v1/user/paging',
 
 
     test: 'http://localhost:8888/',
