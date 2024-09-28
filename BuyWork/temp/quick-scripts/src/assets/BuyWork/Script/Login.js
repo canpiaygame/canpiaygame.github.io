@@ -168,13 +168,6 @@ var Login = /** @class */ (function (_super) {
             });
         });
     };
-    Login.prototype.fixUser = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/];
-            });
-        });
-    };
     __decorate([
         property(cc.EditBox)
     ], Login.prototype, "userName", void 0);
